@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<robot name="ur5e_rs_d415" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="$(find ur_description)/urdf/inc/ur5e_macro.xacro"/>
+  <xacro:ur5e_robot prefix="" />
+
+  <joint name="$end_effector_fixed_joint" type="fixed">
+    <origin xyz="0 0.030 0.146" rpy="0 0 0"/>
+    <parent link="wrist_3_link"/>
+    <child link="end_effector_link"/>
+  </joint>
+  <link name="end_effector_link"/>
+
+  <joint name="$aruco_fixed_joint" type="fixed">
+    <origin xyz="-0.038 0 0.03" rpy="3.14 1.57 0"/>
+    <parent link="wrist_3_link"/>
+    <child link="aruco_link"/>
+  </joint>
+  <link name="aruco_link"/>
+
+ <xacro:arg name="use_nominal_extrinsics" default="false" />
+  <xacro:arg name="add_plug" default="false" />
+  <xacro:arg name="use_mesh" default="true" />
+  <xacro:include filename="$(find realsense2_description)/urdf/_d415.urdf.xacro" />
+
+  <xacro:sensor_d415 parent="base_link" use_nominal_extrinsics="$(arg use_nominal_extrinsics)" add_plug="$(arg add_plug)" use_mesh="$(arg use_mesh)">
+    <origin xyz="-0.213785 0.285903 0.247326" rpy="0 0 1.28591"/>
+  </xacro:sensor_d415>
+  
+</robot>
