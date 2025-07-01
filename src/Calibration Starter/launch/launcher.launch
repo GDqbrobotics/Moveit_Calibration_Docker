@@ -12,7 +12,7 @@
 
     <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find ur5e_rs_d415_moveit_config)/description/urdf/ur5e_rs_d415.urdf.xacro'"/>
     
-    <include file="$(find realsense2_camera)/launch/rs_camera.launch"/>
+    <include file="$(find orbbec_camera)/launch/gemini_330_series.launch"/>
 
     <include file="$(find ur5e_rs_d415_moveit_config)/launch/move_group.launch">
     <arg name="publish_monitored_planning_scene" value="true" />

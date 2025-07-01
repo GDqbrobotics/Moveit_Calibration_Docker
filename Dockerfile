@@ -21,8 +21,19 @@ RUN apt-get update \
     ros-noetic-rviz-visual-tools \
     ros-noetic-image-geometry \
     ros-noetic-rviz \
-    ros-noetic-realsense2-* \
     ros-noetic-geometric-shapes \
+    libgflags-dev \
+    ros-noetic-camera-info-manager \
+    ros-noetic-image-transport-plugins \
+    ros-noetic-compressed-image-transport \
+    ros-noetic-image-transport \
+    ros-noetic-image-publisher \
+    libgoogle-glog-dev \
+    libusb-1.0-0-dev \
+    libeigen3-dev \
+    ros-noetic-diagnostic-updater \
+    ros-noetic-diagnostic-msgs \
+    libdw-dev \
  && rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update \
@@ -49,13 +60,17 @@ RUN apt-get update \
 WORKDIR ${WS_DIR}/src
 
 RUN git clone https://github.com/moveit/moveit_calibration.git
+RUN git clone https://github.com/orbbec/OrbbecSDK_ROS1.git
 COPY . .
 
 WORKDIR ${WS_DIR}
 
 RUN source /opt/ros/noetic/setup.bash \
    && catkin build \
-   && source devel/setup.sh
+   && source devel/setup.sh \
+   && source ./devel/setup.bash \
+   && roscd orbbec_camera \
+   && bash ./scripts/install_udev_rules.sh \
 
 ARG DEBIAN_FRONTEND=dialog
 
