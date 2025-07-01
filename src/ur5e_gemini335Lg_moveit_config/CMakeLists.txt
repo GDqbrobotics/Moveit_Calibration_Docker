@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.1.3)
-project(ur5e_rs_d415_moveit_config)
+project(ur5e_gemini335Lg_moveit_config)
 
 find_package(catkin REQUIRED)
 

@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<robot name="ur5e_rs_d415" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="ur5e_gemini335Lg" xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:include filename="$(find ur_description)/urdf/inc/ur5e_macro.xacro"/>
   <xacro:ur5e_robot prefix="" />
 
@@ -17,13 +17,13 @@
   </joint>
   <link name="aruco_link"/>
 
- <xacro:arg name="use_nominal_extrinsics" default="false" />
-  <xacro:arg name="add_plug" default="false" />
-  <xacro:arg name="use_mesh" default="true" />
-  <xacro:include filename="$(find realsense2_description)/urdf/_d415.urdf.xacro" />
+  <xacro:include filename="$(find orbbec_camera)/urdf/gemini335Lg.urdf.xacro" />
 
-  <xacro:sensor_d415 parent="base_link" use_nominal_extrinsics="$(arg use_nominal_extrinsics)" add_plug="$(arg add_plug)" use_mesh="$(arg use_mesh)">
+  <!-- Connect the virtual root to the actual base link -->
+  <joint name="base_link_to_camera_link" type="fixed">
+    <parent link="base_link"/>
+    <child link="camera_link"/>
     <origin xyz="-0.213785 0.285903 0.247326" rpy="0 0 1.28591"/>
-  </xacro:sensor_d415>
-  
+  </joint>
+
 </robot>
