@@ -1,4 +1,4 @@
-FROM moveit/moveit:noetic-source
+FROM ros:noetic-perception
 
 ENV WS_DIR="/ros_ws"
 WORKDIR ${WS_DIR}
@@ -11,6 +11,7 @@ RUN apt-get update \
  && apt-get install -y \
     build-essential \
     cmake \
+    python3-catkin-tools \
     git-all \
     software-properties-common \
     libjsoncpp-dev \
@@ -54,8 +55,7 @@ COPY . .
 WORKDIR ${WS_DIR}
 
 RUN source /opt/ros/noetic/setup.bash \
-   && catkin build \
-   && source devel/setup.sh
+ && catkin build
 
 ARG DEBIAN_FRONTEND=dialog
 
