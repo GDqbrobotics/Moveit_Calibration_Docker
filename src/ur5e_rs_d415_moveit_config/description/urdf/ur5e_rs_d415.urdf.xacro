@@ -3,19 +3,19 @@
   <xacro:include filename="$(find ur_description)/urdf/inc/ur5e_macro.xacro"/>
   <xacro:ur5e_robot prefix="" />
 
-  <joint name="$end_effector_fixed_joint" type="fixed">
-    <origin xyz="0 0.030 0.146" rpy="0 0 0"/>
-    <parent link="wrist_3_link"/>
-    <child link="end_effector_link"/>
-  </joint>
-  <link name="end_effector_link"/>
-
-  <joint name="$aruco_fixed_joint" type="fixed">
+  <joint name="$aruco1_fixed_joint" type="fixed">
     <origin xyz="-0.038 0 0.03" rpy="3.14 1.57 0"/>
     <parent link="wrist_3_link"/>
-    <child link="aruco_link"/>
+    <child link="aruco_plastic_link"/>
   </joint>
-  <link name="aruco_link"/>
+  <link name="aruco_plastic_link"/>
+
+  <joint name="$aruco2_fixed_joint" type="fixed">
+    <origin xyz="0.015 0.039 0.03" rpy="-1.57 3.14 0"/>
+    <parent link="wrist_3_link"/>
+    <child link="aruco_sticker_link"/>
+  </joint>
+  <link name="aruco_sticker_link"/>
 
  <xacro:arg name="use_nominal_extrinsics" default="false" />
   <xacro:arg name="add_plug" default="false" />
