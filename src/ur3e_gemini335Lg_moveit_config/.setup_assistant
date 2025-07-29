@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: "ur3e_gemini335Lg_moveit_config"
+    relative_path: description/urdf/ur3e_gemini335Lg.urdf.xacro
+    xacro_args: ""
+  SRDF:
+    relative_path: config/ur3e_gemini335Lg.srdf
+  CONFIG:
+    author_name: Support Team
+    author_email: support@qbrobotics.com
+    generated_timestamp: 1685008318

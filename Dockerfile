@@ -49,13 +49,15 @@ RUN apt-get update \
     ros-noetic-moveit-planners-ompl \
     ros-noetic-moveit-ros-visualization \
     ros-noetic-moveit-setup-assistant \
-    ros-noetic-moveit-simple-controller-manager \
- && rm -rf /var/lib/apt/lists/*
+    ros-noetic-moveit-simple-controller-manager 
 
-RUN apt-get update \
- && apt-get install -y \
-    ros-noetic-ur-robot-driver \
- && rm -rf /var/lib/apt/lists/*
+RUN mkdir -p /ur_ws/src \
+ && source /opt/ros/noetic/setup.bash \
+ && cd /ur_ws \
+ && rosdep update --include-eol-distros \
+ && git clone -b disable_dashboard_client_on_X https://github.com/urfeex/Universal_Robots_ROS_Driver.git src/ur_robot_driver \
+ && rosdep install -y -q --from-paths . --ignore-src \
+ && catkin build
 
 WORKDIR ${WS_DIR}/src
 
@@ -66,6 +68,7 @@ COPY . .
 WORKDIR ${WS_DIR}
 
 RUN source /opt/ros/noetic/setup.bash \
+   && source /ur_ws/devel/setup.bash \
    && catkin build \
    && source devel/setup.sh \
    && source ./devel/setup.bash \
@@ -79,4 +82,4 @@ RUN touch /root/.bashrc \
  && echo "source /opt/ros/noetic/setup.bash" >> /root/.bashrc
 
 CMD source /ros_ws/devel/setup.bash \
-   && roslaunch start_calibration launcher.launch robot_ip:=${ROBOT_IP}
+   && roslaunch start_calibration launcher.launch robot_ip:=${ROBOT_IP} robot_model:=${ROBOT_MODEL}

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<robot name="ur3e_gemini335Lg" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="$(find ur_description)/urdf/inc/ur3e_macro.xacro"/>
+  <xacro:ur3e_robot prefix="" />
+
+  <joint name="$end_effector_fixed_joint" type="fixed">
+    <origin xyz="0 0.030 0.146" rpy="0 0 0"/>
+    <parent link="wrist_3_link"/>
+    <child link="end_effector_link"/>
+  </joint>
+  <link name="end_effector_link"/>
+
+  <joint name="$aruco_fixed_joint" type="fixed">
+    <origin xyz="-0.038 0 0.03" rpy="3.14 1.57 0"/>
+    <parent link="wrist_3_link"/>
+    <child link="aruco_link"/>
+  </joint>
+  <link name="aruco_link"/>
+
+  <xacro:include filename="$(find orbbec_camera)/urdf/gemini335Lg.urdf.xacro" />
+
+  <!-- Connect the virtual root to the actual base link -->
+  <joint name="base_link_to_camera_link" type="fixed">
+    <parent link="base_link"/>
+    <child link="camera_link"/>
+    <origin xyz="-0.213785 0.285903 0.247326" rpy="0 0 1.28591"/>
+  </joint>
+
+</robot>

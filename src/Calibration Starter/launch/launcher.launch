@@ -1,29 +1,42 @@
 <launch>
 
   <arg name="robot_ip" default="192.168.3.96" />
-  
-    <include file="$(find ur_robot_driver)/launch/ur5e_bringup.launch">
+  <arg name="robot_model" default="ur5e" />
+    <include file="$(find ur_robot_driver)/launch/$(arg robot_model)_bringup.launch">
       <arg name="robot_ip" value="$(arg robot_ip)" />
       <arg name="controllers" default="joint_state_controller scaled_pos_joint_traj_controller"/>
       <arg name="stopped_controllers" default="pos_joint_traj_controller joint_group_vel_controller speed_scaling_state_controller force_torque_sensor_controller"/>
       <arg name="use_tool_communication" value="false"/>
     </include>
 
-
-    <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find ur5e_gemini335Lg_moveit_config)/description/urdf/ur5e_gemini335Lg.urdf.xacro'"/>
     
     <include file="$(find orbbec_camera)/launch/gemini_330_series.launch">
        <arg name="color_width" value="1280" />
        <arg name="color_height" value="800" />
     </include>
 
-    <include file="$(find ur5e_gemini335Lg_moveit_config)/launch/move_group.launch">
-    <arg name="publish_monitored_planning_scene" value="true" />
-    </include>
+    <group if="$(eval robot_model == 'ur5e')">
+      <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find ur5e_gemini335Lg_moveit_config)/description/urdf/ur5e_gemini335Lg.urdf.xacro'"/>
 
-    <include file="$(find ur5e_gemini335Lg_moveit_config)/launch/moveit_rviz.launch">
-    <arg name="rviz_config" value="$(find ur5e_gemini335Lg_moveit_config)/launch/moveit.rviz" />
-    </include>
-    
+      <include file="$(find ur5e_gemini335Lg_moveit_config)/launch/move_group.launch">
+      <arg name="publish_monitored_planning_scene" value="true" />
+      </include>
+
+      <include file="$(find ur5e_gemini335Lg_moveit_config)/launch/moveit_rviz.launch">
+      <arg name="rviz_config" value="$(find ur5e_gemini335Lg_moveit_config)/launch/moveit.rviz" />
+      </include>
+    </group>
+
+    <group if="$(eval robot_model == 'ur3e')">
+      <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find ur3e_gemini335Lg_moveit_config)/description/urdf/ur3e_gemini335Lg.urdf.xacro'"/>
+
+      <include file="$(find ur3e_gemini335Lg_moveit_config)/launch/move_group.launch">
+      <arg name="publish_monitored_planning_scene" value="true" />
+      </include>
+
+      <include file="$(find ur3e_gemini335Lg_moveit_config)/launch/moveit_rviz.launch">
+      <arg name="rviz_config" value="$(find ur3e_gemini335Lg_moveit_config)/launch/moveit.rviz" />
+      </include>
+    </group>
 
 </launch>
