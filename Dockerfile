@@ -55,7 +55,7 @@ RUN mkdir -p /ur_ws/src \
  && source /opt/ros/noetic/setup.bash \
  && cd /ur_ws \
  && rosdep update --include-eol-distros \
- && git clone -b disable_dashboard_client_on_X https://github.com/urfeex/Universal_Robots_ROS_Driver.git src/ur_robot_driver \
+ && git clone https://github.com/UniversalRobots/Universal_Robots_ROS_Driver src/ur_robot_driver \
  && rosdep install -y -q --from-paths . --ignore-src \
  && catkin build
 
