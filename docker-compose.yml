@@ -16,5 +16,6 @@ services:
     environment:
      - DISPLAY=${DISPLAY}
      - QT_X11_NO_MITSHM=1
-     - ROBOT_IP=192.168.1.96
+     - ROBOT_IP=192.168.1.97
+     - ROBOT_TYPE_=ur5
     network_mode: "host"
