@@ -64,4 +64,4 @@ RUN touch /root/.bashrc \
  && echo "source /opt/ros/noetic/setup.bash" >> /root/.bashrc
 
 CMD source /ros_ws/devel/setup.bash \
-   && roslaunch start_calibration launcher.launch robot_ip:=${ROBOT_IP}
+   && roslaunch start_calibration launcher.launch robot_ip:=${ROBOT_IP} robot_type_:=${ROBOT_TYPE_}

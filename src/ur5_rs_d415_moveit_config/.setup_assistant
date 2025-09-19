@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: "ur5_rs_d415_moveit_config"
+    relative_path: description/urdf/ur5_rs_d415.urdf.xacro
+    xacro_args: ""
+  SRDF:
+    relative_path: config/ur5_rs_d415.srdf
+  CONFIG:
+    author_name: Support Team
+    author_email: support@qbrobotics.com
+    generated_timestamp: 1685008318

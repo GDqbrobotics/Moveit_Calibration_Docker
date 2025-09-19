@@ -1,21 +1,33 @@
 <launch>
 
-  <arg name="robot_ip" default="192.168.3.96" />
-  
+  <arg name="robot_ip" default="192.168.1.97" />
+  <arg name="robot_type_" default="ur5e" />
+
+
+  <group if="$(eval robot_type_ == 'ur5')">
+    <include file="$(find ur_robot_driver)/launch/ur5_bringup.launch">
+      <arg name="robot_ip" value="$(arg robot_ip)" />
+      <arg name="controllers" default="joint_state_controller scaled_pos_joint_traj_controller"/>
+      <arg name="stopped_controllers" default="pos_joint_traj_controller joint_group_vel_controller speed_scaling_state_controller force_torque_sensor_controller"/>
+    </include>
+    <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find ur5_rs_d415_moveit_config)/description/urdf/ur5_rs_d415.urdf.xacro'"/>
+
+    <include file="$(find ur5_rs_d415_moveit_config)/launch/move_group.launch">
+    <arg name="publish_monitored_planning_scene" value="true" />
+    </include>
+
+    <include file="$(find ur5_rs_d415_moveit_config)/launch/moveit_rviz.launch">
+    <arg name="rviz_config" value="$(find ur5_rs_d415_moveit_config)/launch/moveit.rviz" />
+    </include>
+  </group>
+
+  <group if="$(eval robot_type_ == 'ur5e')">
     <include file="$(find ur_robot_driver)/launch/ur5e_bringup.launch">
       <arg name="robot_ip" value="$(arg robot_ip)" />
       <arg name="controllers" default="joint_state_controller scaled_pos_joint_traj_controller"/>
       <arg name="stopped_controllers" default="pos_joint_traj_controller joint_group_vel_controller speed_scaling_state_controller force_torque_sensor_controller"/>
-      <arg name="use_tool_communication" value="false"/>
     </include>
-
-
     <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find ur5e_rs_d415_moveit_config)/description/urdf/ur5e_rs_d415.urdf.xacro'"/>
-    
-    <include file="$(find realsense2_camera)/launch/rs_camera.launch">
-      <arg name="color_width" value="1920"/>
-      <arg name="color_height" value="1080"/>
-    </include>
 
     <include file="$(find ur5e_rs_d415_moveit_config)/launch/move_group.launch">
     <arg name="publish_monitored_planning_scene" value="true" />
@@ -24,6 +36,11 @@
     <include file="$(find ur5e_rs_d415_moveit_config)/launch/moveit_rviz.launch">
     <arg name="rviz_config" value="$(find ur5e_rs_d415_moveit_config)/launch/moveit.rviz" />
     </include>
-    
+  </group>
+
+  <include file="$(find realsense2_camera)/launch/rs_camera.launch">
+    <arg name="color_width" value="1920"/>
+    <arg name="color_height" value="1080"/>
+  </include>
 
 </launch>
