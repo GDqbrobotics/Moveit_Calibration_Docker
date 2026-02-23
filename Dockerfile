@@ -40,21 +40,23 @@ RUN apt-get update \
     ros-noetic-moveit-ros-visualization \
     ros-noetic-moveit-setup-assistant \
     ros-noetic-moveit-simple-controller-manager \
- && rm -rf /var/lib/apt/lists/*
-
-RUN apt-get update \
- && apt-get install -y \
-    ros-noetic-ur-robot-driver \
+    ros-noetic-joint-state-publisher* \
+    ros-noetic-robot-state-publisher* \
+    ros-noetic-ur-client-library \
  && rm -rf /var/lib/apt/lists/*
 
 WORKDIR ${WS_DIR}/src
 
 RUN git clone https://github.com/moveit/moveit_calibration.git
+RUN git clone https://github.com/UniversalRobots/Universal_Robots_ROS_Driver.git src/Universal_Robots_ROS_Driver
 COPY . .
 
 WORKDIR ${WS_DIR}
 
 RUN source /opt/ros/noetic/setup.bash \
+ && apt-get update \
+ && rosdep update --include-eol-distros \
+ && rosdep install --from-paths src --ignore-src -y \
  && catkin build
 
 ARG DEBIAN_FRONTEND=dialog
